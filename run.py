@@ -11,11 +11,9 @@ class Board:
 
     def display_grid (self):
         """
-        method for displaying empty grid.
-
-        Using map() to iterate over range of grid size
+        Method for displaying empty grid.
+        Using map() to iterate over range of grid size.
         and convert numbers to strings to be printed for x (column) co_ordinate.
-
         Using enumerate() to iterate over the row of the grid and place A,B,C etc..
         for y (row) co_ordinates.
 
@@ -29,10 +27,15 @@ class Board:
 class UserGrid(Board):
     def __init__(self,size):
         super().__init__(size)
+        self.user_ships = []
+        self.user_shots = []
 
 class OpponentGrid(Board):
     def __init__(self,size):
         super().__init__(size)
+        self.opponent_ships = []
+        self.opponent_shots = []
+
 
 class Ship:
     def __init__(self,name,size):
@@ -100,55 +103,54 @@ def difficulty(user_choice):
     submarine = Ship("Submarine", 3)
     destroyer = Ship("Destroyer", 2)
 
-    total_ships = []
+    user_ships = []
+    opp_ships = []
     grid_size = 0
 
     if user_choice == "e":
         #easy difficulty
 
         grid_size = 6
-        total_ships.extend([battleship] +
-                            [cruiser] +
-                            [destroyer])
+        user_ships.extend([battleship, cruiser, destroyer])
+        opp_ships.extend([battleship, cruiser, destroyer])
         
 
     elif user_choice == "m":
         #medium difficulty
 
         grid_size = 8
-        total_ships.extend([carrier] +
-                            [battleship] +
-                            [cruiser] +
-                            [submarine] +
-                            [destroyer])
+        user_ships.extend([carrier, battleship, cruiser, submarine, destroyer])
+        opp_ships.extend([carrier, battleship, cruiser, submarine, destroyer])
 
     elif user_choice == "h":
         #hard difficulty
         grid_size = 10
-        total_ships.extend([carrier] +
-                            [battleship] +
-                            [cruiser] +
-                            [submarine] +
-                            [destroyer])
+        user_ships.extend([carrier, battleship, cruiser, submarine, destroyer])
+        opp_ships.extend([carrier, battleship, cruiser, submarine, destroyer])
 
-    return total_ships, grid_size
-
-
-
+    return user_ships, opp_ships, grid_size
 
 
 #get user input on difficulty
 choice = input("Enter difficulty choice:\neasy('e'), medium('m') or hard('h')\n")
 
+
 #initialize battlefield on users choice
-total_ships,grid_size = difficulty(choice)
+user_ships, opp_ships ,grid_size = difficulty(choice)
 user_display = UserGrid(grid_size)
 opponent_display = OpponentGrid(grid_size)
 
-#place ships for bothe user and opponent
-for ships in total_ships:
-    ships.place_ships(user_display)
-    ships.place_ships(opponent_display)
+
+#place ships for user
+for ship in user_ships:
+    ship.place_ships(user_display)
+    user_display.user_ships.append(ship)
+
+#places ships for user
+for ship in opp_ships:
+    ship.place_ships(opponent_display)
+    opponent_display.opponent_ships.append(ship)
+
 
 print("User Display:")
 user_display.display_grid()

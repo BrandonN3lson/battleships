@@ -16,27 +16,58 @@ class Board:
         and convert numbers to strings to be printed for x (column) co_ordinate.
         Using enumerate() to iterate over the row of the grid and place A,B,C etc..
         for y (row) co_ordinates.
-
         """
         # first" " = aligns numbers to grid.
         # second" "= space between numbers
         print("   "+" ".join(map(str,range(1, self.size + 1))))
         for index, row in enumerate(self.grid):
             print(chr(ord("A") + index) + "  " + " ".join(row))
-    
+
+#sub_class for user display grid
 class UserGrid(Board):
     def __init__(self,size):
         super().__init__(size)
         self.user_ships = []
         self.user_shots = []
+        
+    
 
+
+#sub_class for opponent display grid
 class OpponentGrid(Board):
     def __init__(self,size):
         super().__init__(size)
         self.opponent_ships = []
         self.opponent_shots = []
+    
+    def hide_ships (self):
+        """
+        function to hide ships on opponent grid.
+        self.grid is sliced and copied to the variable hidden_grid to use
+        intead to prevent any changes to be made to the main Board grid
+        """
+        hidden_grid = [row[:] for row in self.grid]
+
+        for x in range(self.size):
+            for y in range(self.size):
+                if hidden_grid[x][y] == "@":
+                    hidden_grid[x][y] = "~"
+        return hidden_grid
+
+    def display_hidden_grid (self):
+        """displays grid with hidden ships"""
+
+        hidden_grid = self.hide_ships()
+        print("   "+" ".join(map(str,range(1, self.size + 1))))
+        for index, row in enumerate(hidden_grid):
+            print(chr(ord("A") + index) + "  " + " ".join(row))
 
 
+
+
+
+    
+#Class for storing different ship nmes,sizes and method to position and place on grids.
 class Ship:
     def __init__(self,name,size):
         self.name = name
@@ -90,6 +121,8 @@ class Ship:
                         grid.grid[row_position + i][column_position] = "@"
                         self.position.append((row_position + i, column_position))
 
+        
+
 
 def difficulty(user_choice):
     """
@@ -114,6 +147,7 @@ def difficulty(user_choice):
         user_ships.extend([battleship, cruiser, destroyer])
         opp_ships.extend([battleship, cruiser, destroyer])
         
+        
 
     elif user_choice == "m":
         #medium difficulty
@@ -131,28 +165,30 @@ def difficulty(user_choice):
     return user_ships, opp_ships, grid_size
 
 
+
+
+
 #get user input on difficulty
 choice = input("Enter difficulty choice:\neasy('e'), medium('m') or hard('h')\n")
-
 
 #initialize battlefield on users choice
 user_ships, opp_ships ,grid_size = difficulty(choice)
 user_display = UserGrid(grid_size)
 opponent_display = OpponentGrid(grid_size)
 
-
 #place ships for user
 for ship in user_ships:
     ship.place_ships(user_display)
     user_display.user_ships.append(ship)
 
-#places ships for user
+#places ships for opponent
 for ship in opp_ships:
     ship.place_ships(opponent_display)
     opponent_display.opponent_ships.append(ship)
 
 
+    
 print("User Display:")
 user_display.display_grid()
 print("\nOpponent Display:")
-opponent_display.display_grid()
+opponent_display.display_hidden_grid()

@@ -19,6 +19,7 @@ class Board:
         """
         # first" " = aligns numbers to grid.
         # second" "= space between numbers
+        
         print("   "+" ".join(map(str,range(1, self.size + 1))))
         for index, row in enumerate(self.grid):
             print(chr(ord("A") + index) + "  " + " ".join(row))
@@ -31,8 +32,9 @@ class UserGrid(Board):
         self.user_shots = []
     
     
-    def guesses(self, opponent_grid):
+    def user_guesses(self, opponent_grid):
             while True:
+
                 user_guess = input("Enter Co-ordinates, eg, A3, B4, C5...:\n").upper()
                 
                 #validate user guess is within parameters
@@ -52,17 +54,24 @@ class UserGrid(Board):
 
                 if (row,column) in self.user_shots:
                     print("You've already guessed this. please try again:\n")
+                    continue
 
+                
                 self.user_shots.append((row,column))
                 #opponent_grid referencing function argument when opponent display is passed into function
                 if opponent_grid.grid[row][column] == "@":
                     opponent_grid.grid[row][column] = "X"
-                    print("HIT")
-                    return "HIT"
+                    print("\nUser: HIT!")
+                    break
+                    
                 else:
                     opponent_grid.grid[row][column] = "o"
-                    print("MISS")
-                    return "MISS"
+                    print("\neUser: MISSED")
+                    break
+                
+                
+                
+
 
 #sub_class for opponent display grid
 class OpponentGrid(Board):
@@ -71,7 +80,6 @@ class OpponentGrid(Board):
         self.opponent_ships = []
         self.opponent_shots = []
 
-    
     def hide_ships (self):
         """
         function to hide ships on opponent grid.
@@ -93,7 +101,25 @@ class OpponentGrid(Board):
         print("   "+" ".join(map(str,range(1, self.size + 1))))
         for index, row in enumerate(hidden_grid):
             print(chr(ord("A") + index) + "  " + " ".join(row))
+    
+    def opponent_guess (self,user_grid):
+        while True:
+                row = randint(1,self.size - 1)
+                column = randint(1,self.size - 1)
 
+                if (row,column) in self.opponent_shots:
+                    continue
+
+                self.opponent_shots.append((row,column))
+
+                if user_grid.grid[row][column] == "@":
+                    user_grid.grid[row][column] = "X"
+                    print("Enemy: HIT!")
+                    break
+                else:
+                    user_grid.grid[row][column] = "o"
+                    print("Enemy: MISSED")
+                    break
 
 
 
@@ -172,63 +198,61 @@ def difficulty(user_choice):
     opp_ships = []
     grid_size = 0
 
-    if user_choice == "e":
+    if user_choice == "E":
         #easy difficulty
-
         grid_size = 6
         user_ships.extend([battleship, cruiser, destroyer])
         opp_ships.extend([battleship, cruiser, destroyer])
         
-        
-
-    elif user_choice == "m":
+    elif user_choice == "M":
         #medium difficulty
-
         grid_size = 8
         user_ships.extend([carrier, battleship, cruiser, submarine, destroyer])
         opp_ships.extend([carrier, battleship, cruiser, submarine, destroyer])
 
-    elif user_choice == "h":
+    elif user_choice == "H":
         #hard difficulty
         grid_size = 10
         user_ships.extend([carrier, battleship, cruiser, submarine, destroyer])
         opp_ships.extend([carrier, battleship, cruiser, submarine, destroyer])
+    else:
+        print("\nUnrecognised choice!")
+        return None,None,None
+
 
     return user_ships, opp_ships, grid_size
 
 
 
-
-
-#get user input on difficulty
-choice = input("Enter difficulty choice:\neasy('e'), medium('m') or hard('h')\n")
-
-#initialize battlefield on users choice
-user_ships, opp_ships ,grid_size = difficulty(choice)
-user_display = UserGrid(grid_size)
-opponent_display = OpponentGrid(grid_size)
-
-#place ships for user
-for ship in user_ships:
-    ship.place_ships(user_display)
-    user_display.user_ships.append(ship)
-
-#places ships for opponent
-for ship in opp_ships:
-    ship.place_ships(opponent_display)
-    opponent_display.opponent_ships.append(ship)
-
-
 def play_battleships():
     """
-    main function to play game
+    Main function to play game
     """ 
+    print("\nwelcome to battleships\n")
 
-    print("User Display:")
-    user_display.display_grid()
-    print("\nOpponent Display:")
-    opponent_display.display_hidden_grid()
 
+    #get user input on difficulty
+    while True:
+        choice = input("Enter difficulty choice:\nEasy('E'), Medium('M') or Hard('H')\n").upper()
+        user_ships, opp_ships ,grid_size = difficulty(choice)
+
+        if user_ships is not None:
+            break
+
+    #initialize battlefield on users choice
+    
+    user_display = UserGrid(grid_size)
+    opponent_display = OpponentGrid(grid_size)
+
+    #place ships for user
+    for ship in user_ships:
+        ship.place_ships(user_display)
+        user_display.user_ships.append(ship)
+
+    #places ships for opponent
+    for ship in opp_ships:
+        ship.place_ships(opponent_display)
+        opponent_display.opponent_ships.append(ship)
 
     def check_win(user_grid,opponent_grid):
         """
@@ -242,20 +266,32 @@ def play_battleships():
         opponent_ship_parts =sum(len(ship.position) for ships in opponent_grid.opponent_ships)
 
         if user_hits == opponent_ship_parts:
-            return "You Win"
+            print("You Win")
         elif opponent_hits == user_ship_parts:
-            return "You Lose!"
+            print("You Lose!")
 
     while True:
-        user_display.guesses(opponent_display)
+        
+        print("\n       User:")
+        print()
         user_display.display_grid()
+        
+        print("\n       Enemy:")
         print()
         opponent_display.display_hidden_grid()
+
         result = check_win(user_display, opponent_display)
+
+        user_display.user_guesses(opponent_display)
         if result:
             print(result)
             break
 
-
-
+        opponent_display.opponent_guess(user_display)
+        
+        if result:
+            print(result)
+            break
+        
+    
 play_battleships()

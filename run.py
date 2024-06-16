@@ -33,8 +33,11 @@ class UserGrid(Board):
     
     
     def user_guesses(self, opponent_grid):
-            while True:
-
+        """
+        function for user to input guess, input gets validated and amended to
+        user_shots, once input is amended, opponent_grid is updated.
+        """
+        while True:
                 user_guess = input("Enter Co-ordinates, eg, A3, B4, C5...:\n").upper()
                 
                 #validate user guess is within parameters
@@ -66,12 +69,9 @@ class UserGrid(Board):
                     
                 else:
                     opponent_grid.grid[row][column] = "o"
-                    print("\neUser: MISSED")
+                    print("\nUser: MISSED")
                     break
                 
-                
-                
-
 
 #sub_class for opponent display grid
 class OpponentGrid(Board):
@@ -79,6 +79,8 @@ class OpponentGrid(Board):
         super().__init__(size)
         self.opponent_ships = []
         self.opponent_shots = []
+        self.possible_shots = [(row,column) for row in range(size) for column in range(size)]
+        random.shuffle(self.possible_shots) #shuffles shots stored in possible_shots
 
     def hide_ships (self):
         """
@@ -103,23 +105,28 @@ class OpponentGrid(Board):
             print(chr(ord("A") + index) + "  " + " ".join(row))
     
     def opponent_guess (self,user_grid):
-        while True:
-                row = randint(1,self.size - 1)
-                column = randint(1,self.size - 1)
+        """
+        function that removes one of thee shuffled possible_shots,
+        amends that shot to opponent_shot and updates user_grid.
+        """
+        while self.possible_shots:           
+            row,column = self.possible_shots.pop() #removes random shot from possible_shot
 
-                if (row,column) in self.opponent_shots:
-                    continue
+            if (row,column) in self.possible_shots:
+                continue
 
-                self.opponent_shots.append((row,column))
-
-                if user_grid.grid[row][column] == "@":
+            self.opponent_shots.append((row,column)) # moves/adds shot to opponent_shot
+            if user_grid.grid[row][column] == "@":
                     user_grid.grid[row][column] = "X"
                     print("Enemy: HIT!")
                     break
-                else:
+            else:
                     user_grid.grid[row][column] = "o"
                     print("Enemy: MISSED")
                     break
+        
+        if not self.possible_shots:
+            print("Enemy has no more possible shots")
 
 
 
@@ -156,7 +163,7 @@ class Ship:
                         placed = False
                         break
 
-            # asigning symbole @ for ships
+                # asigning symbole @ for ships
                 if placed:
                     for i in range(self.size):
                         grid.grid[row_position][column_position + i] = "@"
@@ -173,7 +180,7 @@ class Ship:
                         placed = False
                         break
 
-            # asigning symbole @ for ships
+                # asigning symbole @ for ships
                 if placed :
                     for i in range(self.size):
                         grid.grid[row_position + i][column_position] = "@"

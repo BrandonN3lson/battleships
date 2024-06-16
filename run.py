@@ -1,5 +1,17 @@
 import random
 from random import randint
+from os import system, name
+
+# define our clear function
+def clear():
+ 
+    # for windows
+    if name == 'nt':
+        _ = system('cls')
+ 
+    # for mac and linux(here, os.name is 'posix')
+    else:
+        _ = system('clear')
 
 class Board:
     """
@@ -186,6 +198,9 @@ class Ship:
                         grid.grid[row_position + i][column_position] = "@"
                         self.position.append((row_position + i, column_position))
 
+        print(f'place {self.name} and {self.position}')
+ 
+
         
 
 
@@ -208,26 +223,39 @@ def difficulty(user_choice):
     if user_choice == "E":
         #easy difficulty
         grid_size = 6
-        user_ships.extend([battleship, cruiser, destroyer])
-        opp_ships.extend([battleship, cruiser, destroyer])
+        user_ships = [Ship("Battleship", 4), Ship("Cruiser", 3), Ship("Destroyer", 2)]
+        opp_ships = [Ship("Battleship", 4), Ship("Cruiser", 3), Ship("Destroyer", 2)]
         
     elif user_choice == "M":
         #medium difficulty
         grid_size = 8
-        user_ships.extend([carrier, battleship, cruiser, submarine, destroyer])
-        opp_ships.extend([carrier, battleship, cruiser, submarine, destroyer])
+        user_ships = [Ship("Carrier", 5), Ship("Battleship", 4), Ship("Cruiser", 3), Ship("Submarine", 3), Ship("Destroyer", 2)]
+        opp_ships = [Ship("Carrier", 5), Ship("Battleship", 4), Ship("Cruiser", 3), Ship("Submarine", 3), Ship("Destroyer", 2)]
 
     elif user_choice == "H":
         #hard difficulty
         grid_size = 10
-        user_ships.extend([carrier, battleship, cruiser, submarine, destroyer])
-        opp_ships.extend([carrier, battleship, cruiser, submarine, destroyer])
+        user_ships = [Ship("Carrier", 5), Ship("Battleship", 4), Ship("Cruiser", 3), Ship("Submarine", 3), Ship("Destroyer", 2)]
+        opp_ships = [Ship("Carrier", 5), Ship("Battleship", 4), Ship("Cruiser", 3), Ship("Submarine", 3), Ship("Destroyer", 2)]
     else:
         print("\nUnrecognised choice!")
         return None,None,None
 
-
+    print(f" diff funct: User ships: {[ship.name for ship in user_ships]}")
+    print(f" diff funct: Opponent ships: {[ship.name for ship in opp_ships]}")
     return user_ships, opp_ships, grid_size
+
+
+def play_again ():
+    replay = input("Would you like to play again? yes ('Y') or no ('N')").upper()
+
+    if replay == "Y":
+        clear()
+        play_battleships()
+    elif replay == "N":
+        clear()
+        print("Thank you for playing!")
+            
 
 
 
@@ -243,7 +271,7 @@ def play_battleships():
         choice = input("Enter difficulty choice:\nEasy('E'), Medium('M') or Hard('H')\n").upper()
         user_ships, opp_ships ,grid_size = difficulty(choice)
 
-        if user_ships is not None:
+        if user_ships or opp_ships is not None:
             break
 
     #initialize battlefield on users choice
@@ -256,10 +284,16 @@ def play_battleships():
         ship.place_ships(user_display)
         user_display.user_ships.append(ship)
 
+    print(f"User ships after placement: {[ship.name for ship in user_display.user_ships]}")
+    print(f"User ship positions: {[ship.position for ship in user_display.user_ships]}")
+
     #places ships for opponent
     for ship in opp_ships:
         ship.place_ships(opponent_display)
         opponent_display.opponent_ships.append(ship)
+
+    print(f"Opponent ships after placement: {[ship.name for ship in opponent_display.opponent_ships]}")
+    print(f"Opponent ships after placement: {[ship.position for ship in opponent_display.opponent_ships]}")
 
     def check_win(user_grid,opponent_grid):
         """
@@ -272,10 +306,17 @@ def play_battleships():
         user_ship_parts =sum(len(ship.position) for ships in user_grid.user_ships)
         opponent_ship_parts =sum(len(ship.position) for ships in opponent_grid.opponent_ships)
 
+        print(f"User hits: {user_hits}")
+        print(f"Opponent hits: {opponent_hits}")
+        print(f"User ship parts: {user_ship_parts}")
+        print(f"Opponent ship parts: {opponent_ship_parts}")
+
         if user_hits == opponent_ship_parts:
-            print("You Win")
+            return "You Win"
         elif opponent_hits == user_ship_parts:
-            print("You Lose!")
+            return "You Lose!"
+        return None
+
 
     while True:
         
@@ -288,17 +329,27 @@ def play_battleships():
         opponent_display.display_hidden_grid()
 
         result = check_win(user_display, opponent_display)
+        if result:
+            clear()
+            print(result)
+            play_again()
 
         user_display.user_guesses(opponent_display)
+
+        result = check_win(user_display, opponent_display)
         if result:
+            clear()
             print(result)
-            break
+            play_again()
+        
 
         opponent_display.opponent_guess(user_display)
-        
+
+        result = check_win(user_display, opponent_display)
         if result:
+            clear()
             print(result)
-            break
+            play_again()
         
     
 play_battleships()

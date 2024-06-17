@@ -331,7 +331,6 @@ def play_battleships():
     print("\nwelcome to battleships")
     print("Find and destroy all Enemy ships to win.\n")
 
-
     # get user input on difficulty
     while True:
         choice = input(
@@ -366,9 +365,6 @@ def play_battleships():
         user_ship_parts = sum(row.count("@") for row in user_grid.grid)
         opponent_ship_parts = sum(row.count("@") for row in opponent_grid.grid)
 
-        print(f"\nUser ship part left: {user_ship_parts}")
-        print(f"Opponent ship parts left: {opponent_ship_parts}")
-
         if opponent_ship_parts == 0:
             return "You Win"
         elif user_ship_parts == 0:
@@ -376,17 +372,17 @@ def play_battleships():
         return None
 
     while True:
-        print("\n_________User_________\n")
+        print("\n......... BattleShips .........\n")
+        print("---------- User ----------\n")
         user_display.display_grid()
 
-        print("\n_________Enemy_________\n")
+        print("\n---------- Enemy ----------\n")
         opponent_display.display_hidden_grid()
 
         user_result = user_display.user_guesses(opponent_display)
         print(f"\nUser {user_result}")
         opp_result = opponent_display.opponent_guess(user_display)
         print(f"Enemy {opp_result}")
-        print()
 
         result = check_win(user_display, opponent_display)
         if result:

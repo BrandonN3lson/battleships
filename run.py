@@ -313,7 +313,7 @@ def play_again():
     """
     function to play game again
     """
-    replay = input("Would you like to play again? Yes('Y') or No('N')").upper()
+    replay = input("play again? Yes('Y') or No('N')\nEnter here: ").upper()
 
     if replay == "Y":
         clear()
@@ -321,6 +321,9 @@ def play_again():
     elif replay == "N":
         clear()
         print("Thank you for playing!")
+    else:
+        clear()
+        print("invalid input")
         play_again()
 
 
@@ -389,6 +392,7 @@ def play_battleships():
             clear()
             print(result)
             play_again()
+            break
 
 
 play_battleships()

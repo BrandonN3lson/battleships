@@ -57,6 +57,7 @@ class UserGrid(Board):
         """
         while True:
             user_guess = input("\nEnter Co-ordinates, eg, A3\n Enter:").upper()
+
             # to cancel game and go back to difficulty selection
             if user_guess == "END":
                 clear()
@@ -83,10 +84,12 @@ class UserGrid(Board):
                       "Please enter again:\n")
                 continue
 
+            # validates if user already guessed co-ordinates
             if (row, col) in self.user_shots:
                 print("You've already guessed this. please try again:\n")
                 continue
 
+            # if user hits or miss target
             self.user_shots.append((row, col))
             if opponent_grid.grid[row][col] == "@":
                 opponent_grid.grid[row][col] = "X"
@@ -110,6 +113,7 @@ class OpponentGrid(Board):
         self.possible_shots = [
             (row, column) for row in range(size) for column in range(size)
         ]
+
         # shuffles shots stored in possible_shots
         random.shuffle(self.possible_shots)
 
@@ -121,6 +125,7 @@ class OpponentGrid(Board):
         """
         hidden_grid = [row[:] for row in self.grid]
 
+        # for loop to change @ to ~
         for x in range(self.size):
             for y in range(self.size):
                 if hidden_grid[x][y] == "@":
@@ -128,7 +133,9 @@ class OpponentGrid(Board):
         return hidden_grid
 
     def display_hidden_grid(self):
-        """displays grid with hidden ships"""
+        """
+        displays grid with hidden ships
+        """
 
         hidden_grid = self.hide_ships()
         print("   " + " ".join(map(str, range(1, self.size + 1))))
@@ -141,16 +148,18 @@ class OpponentGrid(Board):
         amends that shot to opponent_shot and updates user_grid.
         """
         while self.possible_shots:
+            # Removes random shot(row,col) from possible_shot
             row, column = (
                 self.possible_shots.pop()
-            )  # removes random shot from possible_shot
+            )
 
             if (row, column) in self.possible_shots:
                 continue
 
+            # Moves/Adds shot to opponent_shot
             self.opponent_shots.append(
                 (row, column)
-            )  # moves/adds shot to opponent_shot
+            )
             if user_grid.grid[row][column] == "@":
                 user_grid.grid[row][column] = "X"
                 return "HIT!"
@@ -198,12 +207,13 @@ class Ship:
                         placed = False
                         break
 
-                # asigning symbole @ for ships
+                # asigning symbol @ for ships
                 if placed:
                     for i in range(self.size):
                         grid.grid[row][column + i] = "@"
                         self.position.append((row, column + i))
 
+            # Orientates ships vertically
             elif orientation == "vertical":
                 row = randint(0, grid.size - self.size)
                 column = randint(0, grid.size - 1)
@@ -331,20 +341,23 @@ def play_battleships():
     """
     Main function to play game
     """
-    print("\nwelcome to battleships")
-    print("Find and destroy all Enemy ships to win.\n")
+    print("\n        WELCOME TO BATTLESHIPS\n")
+    print("Find and destroy all Enemy ships to win.")
+    print("If you wish end game at any time. Input 'END'")
+    print("when asked for co-ordinates.\n")
+    print("Easy(3 ships, 6 X 6 grid) | ", end="")
+    print(" Medium(5 ships, 8 X 8 grid) |", end="")
+    print(" Hard(5 ships, 10 X 10 grid)\n")
 
     # get user input on difficulty
     while True:
         choice = input(
-            "Enter difficulty choice:\nEasy('E'), Medium('M') or Hard('H')\n"
+            "Enter difficulty\nEasy('E'), Medium('M') or Hard('H')\nInput: "
         ).upper()
         user_ships, opp_ships, grid_size = difficulty(choice)
 
         if user_ships or opp_ships is not None:
             break
-
-    # initialize battlefield on users choice
 
     user_display = UserGrid(grid_size)
     opponent_display = OpponentGrid(grid_size)

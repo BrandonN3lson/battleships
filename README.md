@@ -1,32 +1,49 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# BATTLESHIPS GAME
 
-Welcome,
+    Welcome to the Battleships game. this is a command-line implementation of the classic Battleships board game
+    written in Python.
+    The goal is to find and destroy all enemy ships before they destroy your.
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **May 14, 2024**
+    [Click here](https://battleship--game-d1c0138472bb.herokuapp.com/) to see deployed game.
 
-## Reminders
+## Table of Contents
+- [Game Rules](#game-rules)
+- [Features](#features)
+- [Data Model](#data-model)
+- [Difficulty Levels](#difficulty-levels)
+- [Dependencies](#Dependencies)
+- [How To Play](#features)
+- [Deployment](#deployment)
+- [Testing and Validating](#testing-and-validating)
+- [Bugs](#bugs)
+- [References](#references)
 
-- Your code must be placed in the `run.py` file
-- Your dependencies must be placed in the `requirements.txt` file
-- Do not edit any of the other files or your code may not deploy properly
+## Game Rules
+    1. The game is played on a grid where each player has a fleet of ships.
 
-## Creating the Heroku app
+    2. Players take turns guessing the co-ordinates of the enemy's ships.
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+    3. A hit is marked with "X" and a miss is marked with "o"
 
-1. `heroku/python`
-2. `heroku/nodejs`
+    4. The game continues until all parts of the player or enemys ships
+    has been destroyed.
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+## Features
+- Three difficulties: Easy, Medium, Hard.
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+- Grids are varying sizes depending on game difficulty
 
-Connect your GitHub repository and deploy as normal.
+- Hidden ships on opponent grid adds to the challenge
 
-## Constraints
+-  Exit game by entering "END", takes you back to difficulty selection
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+## Difficulty Levels
+**EASY :** 3 Ships, 6x6 grid.
 
----
+**MEDIUM :** 5 Ships, 8x8 grid
 
-Happy coding!
+**HARD :** 5 Ships, 10x10 grid
+
+## Dependencies
+    Python 3.x
+No external libraries are required for this game

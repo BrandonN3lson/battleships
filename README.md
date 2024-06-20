@@ -100,25 +100,23 @@ To fork the repository:
 
 ## Manual testing
     
-****Test Case**|**Description**|**Expected Result**|**Status**| | | | | | | **
-:-----:
-:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:
-Start Game|Run python battleships.py|Game starts and displays welcome message and difficulty options|Pass| | | | | | | 
-Choose Easy Difficulty|Input 'E' when prompted for difficulty|6x6 grid is displayed with 3 ships for both user and opponent|Pass| | | | | | | 
-Choose Medium Difficulty|Input 'M' when prompted for difficulty|8x8 grid is displayed with 5 ships for both user and opponent|Pass| | | | | | | 
-Choose Hard Difficulty|Input 'H' when prompted for difficulty|10x10 grid is displayed with 5 ships for both user and opponent|Pass| | | | | | | 
-Enter invalid Difficulty choice|Input 'F', '*!',|Game displays an error message and prompts to choose difficulty.|Pass| | | | | | | 
-Enter Valid Guess|Input 'A1', 'B2', etc.|Game processes the guess and updates the grid accordingly|Pass| | | | | | | 
-Enter empty guesses, and with whitespaces|Input: "    "|Game displays an error message and prompts for a new guess|pass| | | | | | | 
-Enter Invalid Guess|Input 'Z9', '1A', etc.|Game displays an error message and prompts for a new guess|Pass| | | | | | | 
-Hit Ship|Guess a coordinate with a ship part|Grid updates with an 'X' and displays "HIT!"|Pass| | | | | | | 
-Miss Ship|Guess a coordinate without a ship part|Grid updates with an 'o' and displays "MISSED"|Pass| | | | | | | 
-End Game Early|Input 'END' when prompted for coordinates|Game ends and returns to difficulty selection|Pass| | | | | | | 
-Win Game|Sink all opponent ships|Game displays "You Win"|Pass| | | | | | | 
-Lose Game|Opponent sinks all user ships|Game displays "You Lose!"|Pass| | | | | | | 
-Play Again Yes|Input 'Y' when prompted to play again|Game restarts and prompts for difficulty selection|Pass| | | | | | | 
-Play Again No|Input 'N' when prompted to play again|Game ends with a thank you message|Pass| | | | | | | 
- | | | | | | | | | | 
+| Test Case                                 | Description                               | Expected Result                                                  | Status |
+| ----------------------------------------- | ----------------------------------------- | ---------------------------------------------------------------- | ------ |
+| Start Game                                | Run python battleships.py                 | Game starts and displays welcome message and difficulty options  | Pass   |
+| Choose Easy Difficulty                    | Input 'E' when prompted for difficulty    | 6x6 grid is displayed with 3 ships for both user and opponent    | Pass   |
+| Choose Medium Difficulty                  | Input 'M' when prompted for difficulty    | 8x8 grid is displayed with 5 ships for both user and opponent    | Pass   |
+| Choose Hard Difficulty                    | Input 'H' when prompted for difficulty    | 10x10 grid is displayed with 5 ships for both user and opponent  | Pass   |
+| Enter invalid Difficulty choice           | Input 'F', '\*!',                         | Game displays an error message and prompts to choose difficulty. | Pass   |
+| Enter Valid Guess                         | Input 'A1', 'B2', etc.                    | Game processes the guess and updates the grid accordingly        | Pass   |
+| Enter empty guesses, and with whitespaces | Input: "    "                             | Game displays an error message and prompts for a new guess       | pass   |
+| Enter Invalid Guess                       | Input 'Z9', '1A', etc.                    | Game displays an error message and prompts for a new guess       | Pass   |
+| Hit Ship                                  | Guess a coordinate with a ship part       | Grid updates with an 'X' and displays "HIT!"                     | Pass   |
+| Miss Ship                                 | Guess a coordinate without a ship part    | Grid updates with an 'o' and displays "MISSED"                   | Pass   |
+| End Game Early                            | Input 'END' when prompted for coordinates | Game ends and returns to difficulty selection                    | Pass   |
+| Win Game                                  | Sink all opponent ships                   | Game displays "You Win"                                          | Pass   |
+| Lose Game                                 | Opponent sinks all user ships             | Game displays "You Lose!"                                        | Pass   |
+| Play Again Yes                            | Input 'Y' when prompted to play again     | Game restarts and prompts for difficulty selection               | Pass   |
+| Play Again No                             | Input 'N' when prompted to play again     | Game ends with a thank you message                               | Pass   |
 
 ## References
 

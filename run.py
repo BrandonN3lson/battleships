@@ -4,8 +4,11 @@ from random import randint
 from os import system, name
 
 
-# define our clear function
 def clear():
+    """
+    define our clear function, take from a website
+    (https://www.geeksforgeeks.org/clear-screen-python/)
+    """
 
     # for windows
     if name == "nt":
@@ -410,6 +413,8 @@ def play_battleships():
             break
 
 
+# if __name == "__main__" was taken from a websit
+#  https://www.freecodecamp.org/news/if-name-main-python-example/
 if __name__ == "__main__":
     init(autoreset=True)
     play_battleships()

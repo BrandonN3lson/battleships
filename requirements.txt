@@ -1,1 +1,4 @@
-# Your requirements go here
+black==24.4.2
+click==8.1.7
+colorama==0.4.6
+pathspec==0.12.1

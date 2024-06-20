@@ -1,4 +1,5 @@
 import random
+from colorama import init, Fore
 from random import randint
 from os import system, name
 
@@ -38,7 +39,7 @@ class Board:
         # second" "= space between numbers
         print("   " + " ".join(map(str, range(1, self.size + 1))))
         for index, row in enumerate(self.grid):
-            print(chr(ord("A") + index) + "  " + " ".join(row))
+            print(chr(ord("A") + index) + "  " + Fore.CYAN + " ".join(row))
 
 
 class UserGrid(Board):
@@ -140,7 +141,7 @@ class OpponentGrid(Board):
         hidden_grid = self.hide_ships()
         print("   " + " ".join(map(str, range(1, self.size + 1))))
         for index, row in enumerate(hidden_grid):
-            print(chr(ord("A") + index) + "  " + " ".join(row))
+            print(chr(ord("A") + index) + "  " + Fore.CYAN + " ".join(row))
 
     def opponent_guess(self, user_grid):
         """
@@ -319,6 +320,22 @@ def difficulty(user_choice):
     return user_ships, opp_ships, grid_size
 
 
+def check_win(user_grid, opponent_grid):
+    """
+    Get total number of ship parts left on the grid
+    Once ship parts reaches 0, it returns "You win" or "You lose"
+    """
+
+    user_ship_parts = sum(row.count("@") for row in user_grid.grid)
+    opponent_ship_parts = sum(row.count("@") for row in opponent_grid.grid)
+
+    if opponent_ship_parts == 0:
+        return Fore.GREEN + "You Win"
+    elif user_ship_parts == 0:
+        return Fore.RED + "You Lose!"
+    return None
+
+
 def play_again():
     """
     function to play game again
@@ -341,7 +358,7 @@ def play_battleships():
     """
     Main function to play game
     """
-    print("\n        WELCOME TO BATTLESHIPS\n")
+    print(Fore.BLUE + "\n        WELCOME TO BATTLESHIPS\n")
     print("Find and destroy all Enemy ships to win.")
     print("If you wish end game at any time. Input 'END'")
     print("when asked for co-ordinates.\n")
@@ -372,27 +389,12 @@ def play_battleships():
         ship.place_ships(opponent_display)
         opponent_display.opponent_ships.append(ship)
 
-    def check_win(user_grid, opponent_grid):
-        """
-        Get total number of ship parts left on the grid
-        Once ship parts reaches 0, it returns "You win" or "You lose"
-        """
-
-        user_ship_parts = sum(row.count("@") for row in user_grid.grid)
-        opponent_ship_parts = sum(row.count("@") for row in opponent_grid.grid)
-
-        if opponent_ship_parts == 0:
-            return "You Win"
-        elif user_ship_parts == 0:
-            return "You Lose!"
-        return None
-
     while True:
-        print("\n......... BattleShips .........\n")
-        print("---------- User ----------\n")
+        print(Fore.LIGHTMAGENTA_EX + "\n......... BattleShips .........\n")
+        print(Fore.GREEN + "---------- User ----------\n")
         user_display.display_grid()
 
-        print("\n---------- Enemy ----------\n")
+        print(Fore.RED + "\n---------- Enemy ----------\n")
         opponent_display.display_hidden_grid()
 
         user_result = user_display.user_guesses(opponent_display)
@@ -408,4 +410,6 @@ def play_battleships():
             break
 
 
-play_battleships()
+if __name__ == "__main__":
+    init(autoreset=True)
+    play_battleships()

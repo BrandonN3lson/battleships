@@ -132,7 +132,7 @@ To fork the repository:
 
 ## Testing and Validating
 
-- [Code Institute Python Linter](https://pep8ci.herokuapp.com/#)
+- [Code Institute Python Linter (PEP8 Validator)](https://pep8ci.herokuapp.com/#)
 
 - ![validation result](assets/images/python_lynter_validator.png)
 

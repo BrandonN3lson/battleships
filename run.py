@@ -6,7 +6,7 @@ from os import system, name
 
 def clear():
     """
-    define our clear function, take from a website
+    define our clear function, taken from a website
     (https://www.geeksforgeeks.org/clear-screen-python/)
     """
 

@@ -1,33 +1,43 @@
 # BATTLESHIPS GAME
 
-    Welcome to the Battleships game. this is a command-line implementation of the classic Battleships board game
-    written in Python.
-    The goal is to find and destroy all enemy ships before they destroy your.
+Welcome to the Battleships game. this is a command-line implementation of the classic Battleships board game
+written in Python.
+The goal is to find and destroy all enemy ships before they destroy your.
+
+ ![Main game display](assets/images/amiresponsive-image.png)
 
 [Click here](https://battleship--game-308a1679c9d6.herokuapp.com/) to see deployed game.
 
 ## Table of Contents
 - [Game Rules](#game-rules)
+- [Ship Types](#ship-types)
 - [Features](#features)
 - [Data Model](#data-model)
 - [Difficulty Levels](#difficulty-levels)
-- [Dependencies](#Dependencies)
-- [How To Play](#features)
+- [Dependencies](#dependencies)
+- [How To Play](#how-to-play)
 - [Deployment](#deployment)
 - [Testing and Validating](#testing-and-validating)
-- [Bugs](#bugs)
 - [References](#references)
 
 ## Game Rules
-    1. The game is played on a grid where each player has a fleet of ships.
+1. The game is played on a grid where each player has a fleet of ships.
 
-    2. Players take turns guessing the co-ordinates of the enemy's ships.
+2. Players take turns guessing the co-ordinates of the enemy's ships.
 
-    3. A Hit is marked with "X" and a Miss is marked with "o"
+3. A Hit is marked with "X" and a Miss is marked with "o"
 
-    4. The game continues until all parts of the player or enemys ships
-    has been destroyed.
+4. The game continues until all parts of the player or enemys ships
+has been destroyed.
 
+## Ship Types
+| Ships      | Size |
+| ---------- | ---- |
+| Carrier    | 5    |
+| Battleship | 4    |
+| Cruiser    | 3    |
+| Submarine  | 2    |
+| Destroyer  | 2    |
 ## Features
 - Three difficulties: Easy, Medium, Hard.
 
@@ -35,7 +45,21 @@
 
 - Hidden ships on opponent grid adds to the challenge
 
+    ![grids display](assets/images/grids-display.png)
+
 -  Exit game by entering "END", takes you back to difficulty selection
+
+    ![end game function](assets/images/input-end-leave-game.png)
+
+## Data Model
+- I used a Board class as the main model with 'Usergrid' and
+'OpponentGrid' as subclasses. 
+
+- This allows both to use the same grid setup but have different actions without effecting the main model.
+
+- The 'Ship' class keeps details and placement rules clear and reusable.
+
+
 
 ## Difficulty Levels
 **EASY :** 3 Ships, 6x6 grid.
@@ -51,18 +75,30 @@
 
 ## How To Play
 1. Choose the difficulty level you wish to play.
+    [Difficulty selection](assets/images/choose-difficulty.png)
 
 2. The game will display 2 grids: one for the user and one for the opponent
 
 3. Enter you guess in the format: A1, B3, C3 etc..
+    - [co-ordinate input](assets/images/choose-coordinates.png)
+
+    Invalid input displays the following:
+    - [invalid input format](assets/images/invalid-coordinate-format.png)
+    - [input exceeds grid size](assets/images/Invalid-coordinates-alert.png)
 
 4. The game will inform you if your guess is a "HIT" or a "MISS" and mark it on the grids.
+
+- [HIT or Miss](assets/images/Hit-or-miss.png)
 
 5. The opponent will also make a guess
 
 6. Continue guessing until all the opponent ships have been destroyed.
 
-## Deployed
+    Results are displayed at end of game either if u win or lose and a play again input will follow.
+    - [End-game Win](assets/images/result-display-win.png)
+    - [End-game Lose](assets/images/result-display-lose.png)
+
+## Deployment
 This game has been deloyed using Heruko.
 The link to the game is at the start of the Readme.
 
@@ -98,6 +134,8 @@ To fork the repository:
 
 - [Code Institute Python Linter](https://pep8ci.herokuapp.com/#)
 
+- ![validation result](assets/images/python_lynter_validator.png)
+
 ## Manual testing
     
 | Test Case                                 | Description                               | Expected Result                                                  | Status |
@@ -118,6 +156,7 @@ To fork the repository:
 | Play Again Yes                            | Input 'Y' when prompted to play again     | Game restarts and prompts for difficulty selection               | Pass   |
 | Play Again No                             | Input 'N' when prompted to play again     | Game ends with a thank you message                               | Pass   |
 
+
 ## References
 
 - [Clear_screen](https://www.geeksforgeeks.org/clear-screen-python/) function was taken
@@ -127,4 +166,9 @@ To fork the repository:
 
 - [freecoderscamp.ord](https://www.freecodecamp.org/news/if-name-main-python-example/)
 
-- [Stack Overflow](https://stackoverflow.com/questions/67308698/how-to-make-a-nested-list-comprehension) : Nested for loops for to make the grids.
+- [Stack Overflow](https://stackoverflow.com/questions/67308698/how-to-make-a-nested-list-comprehension) : Nested for loops to make the grids.
+
+- [markdown table coverter](https://tabletomarkdown.com/convert-spreadsheet-to-markdown/) used for converting excel sheet for manual testing table to markdown.
+
+
+[Back to top](#battleships-game)

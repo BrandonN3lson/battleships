@@ -73,7 +73,7 @@ class UserGrid(Board):
                 or not user_guess[0].isalpha()
                 or not user_guess[1:].isdigit()
             ):
-                print("invalid input, guess length has to be 2," +
+                print("invalid input, guess length has to be 2,\n" +
                       "starting with a letter followed by a number\n")
                 print("example: A1, B2, C3...")
                 print("Please enter again:\n")
@@ -84,7 +84,7 @@ class UserGrid(Board):
 
             # validates that user guess is within range of grid
             if row < 0 or row >= self.size or col < 0 or col >= self.size:
-                print(f"Your guess {user_guess} is outside grid." +
+                print(f"Your guess {user_guess} is outside grid. " +
                       "Please enter again:\n")
                 continue
 

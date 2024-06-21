@@ -136,7 +136,10 @@ To fork the repository:
 
 - ![validation result](assets/images/python_lynter_validator.png)
 
-## Manual testing
+    ## Flow Chart
+    Made a flow chart to help with testing
+    - [Flow chart](assets/images/flowchart.drawio.png)
+    ## Manual testing
     
 | Test Case                                 | Description                               | Expected Result                                                  | Status |
 | ----------------------------------------- | ----------------------------------------- | ---------------------------------------------------------------- | ------ |
@@ -167,6 +170,8 @@ To fork the repository:
 - [freecoderscamp.ord](https://www.freecodecamp.org/news/if-name-main-python-example/)
 
 - [Stack Overflow](https://stackoverflow.com/questions/67308698/how-to-make-a-nested-list-comprehension) : Nested for loops to make the grids.
+
+- [W3Schools](https://www.w3schools.com/)
 
 - [markdown table coverter](https://tabletomarkdown.com/convert-spreadsheet-to-markdown/) used for converting excel sheet for manual testing table to markdown.
 
